@@ -1,54 +1,54 @@
-const compTable = [
-  { instruction: '0', value: '0101010' },
-  { instruction: '1', value: '0111111' },
-  { instruction: '-1', value: '0111010' },
-  { instruction: 'D', value: '0001100' },
-  { instruction: 'A', value: '0110000' },
-  { instruction: 'M', value: '1110000' },
-  { instruction: '!D', value: '0001100' },
-  { instruction: '!A', value: '0110001' },
-  { instruction: '!M', value: '1110001' },
-  { instruction: '-D', value: '0001111' },
-  { instruction: '-A', value: '0110011' },
-  { instruction: '-M', value: '1110011' },
-  { instruction: 'D+1', value: '0011111' },
-  { instruction: 'A+1', value: '0110111' },
-  { instruction: 'M+1', value: '1110111' },
-  { instruction: 'D-1', value: '0001110' },
-  { instruction: 'A-1', value: '0110010' },
-  { instruction: 'M-1', value: '1110010' },
-  { instruction: 'D+A', value: '0000010' },
-  { instruction: 'D+M', value: '1000010' },
-  { instruction: 'D-A', value: '0010011' },
-  { instruction: 'D-M', value: '1010011' },
-  { instruction: 'A-D', value: '0000111' },
-  { instruction: 'M-D', value: '1000111' },
-  { instruction: 'D&A', value: '0000000' },
-  { instruction: 'D&M', value: '1000000' },
-  { instruction: 'D|A', value: '0010101' },
-  { instruction: 'D|M', value: '1010101' }
- ];
+const compTable = {
+  '0': '0101010',
+  '1': '0111111',
+  '-1': '0111010',
+  'D': '0001100',
+  'A': '0110000',
+  'M': '1110000',
+  '!D': '0001100',
+  '!A': '0110001',
+  '!M': '1110001',
+  '-D': '0001111',
+  '-A': '0110011',
+  '-M': '1110011',
+  'D+1': '0011111',
+  'A+1': '0110111',
+  'M+1': '1110111',
+  'D-1': '0001110',
+  'A-1': '0110010',
+  'M-1': '1110010',
+  'D+A': '0000010',
+  'D+M': '1000010',
+  'D-A': '0010011',
+  'D-M': '1010011',
+  'A-D': '0000111',
+  'M-D': '1000111',
+  'D&A': '0000000',
+  'D&M': '1000000',
+  'D|A': '0010101',
+  'D|M': '1010101'
+};
  
- const destTable = [
-   { instruction: '', value: '000' },
-   { instruction: 'M', value: '001' },
-   { instruction: 'D', value: '010' },
-   { instruction: 'MD', value: '011' },
-   { instruction: 'A', value: '100' },
-   { instruction: 'AM', value: '101' },
-   { instruction: 'AD', value: '110' },
-   { instruction: 'AMD', value: '111'}
- ];
+ const destTable = {
+  '': '000',
+  'M': '001',
+  'D': '010',
+  'MD': '011',
+  'A': '100',
+  'AM': '101',
+  'AD': '110',
+  'AMD': '111'
+ };
  
- const jumpTable = [
-   { instruction: '', value: '000' },
-   { instruction: 'JGT', value: '001' },
-   { instruction: 'JEQ', value: '010' },
-   { instruction: 'JGE', value: '011' },
-   { instruction: 'JLT', value: '100' },
-   { instruction: 'JNE', value: '101' },
-   { instruction: 'JLE', value: '110' },
-   { instruction: 'JMP', value: '111' }
- ];
+ const jumpTable = {
+  '': '000',
+  'JGT': '001',
+  'JEQ': '010',
+  'JGE': '011',
+  'JLT': '100',
+  'JNE': '101',
+  'JLE': '110',
+  'JMP': '111'
+};
 
- export { compTable, destTable, jumpTable };
+export { compTable, destTable, jumpTable };
