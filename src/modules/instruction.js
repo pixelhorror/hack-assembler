@@ -4,14 +4,6 @@ export default class Instruction {
   rawValue = undefined;
   isAInstruction = false;
 
-  get isA() {
-    return this.isAInstruction;
-  }
-
-  get isC() {
-    return !this.isA;
-  }
-
   set contents(binary) {
     try {
       if (binary.includes('undefined')) {
@@ -30,29 +22,47 @@ export default class Instruction {
     this.isAInstruction = rawValue.startsWith('@') ? true : false;
   }
 
+  /**
+   * Processes raw data into a proper instruction
+   */
   compute() {
-    if (this.isA) {
+    if (this.isA()) {
       this.handleA(this.rawValue);
     } else {
       this.handleC(this.rawValue);
     }
   }
 
-  getSymbolValue() {
-    return this.rawValue.substr(1, this.rawValue.length);
+  /**
+   * Signals if the current raw data belongs to an A-Instruction
+   * @returns boolean
+   */
+  isA() {
+    return this.isAInstruction;
   }
 
+  /**
+   * Signals if the current raw data belongs to a C-Instruction
+   * @returns boolean
+   */
+  isC() {
+    return !this.isA;
+  }
+
+  /**
+   * Handles raw data for creating an A-Instruction
+   * @param {string} rawValue 
+   */
   handleA(rawValue) {
     let address = rawValue.substr(1, rawValue.length);
     const binary = this.convertToBinary(address);
     this.contents = this.pad(binary);
   }
 
-  hasSymbol() {
-    const value = this.rawValue.substring(1, this.rawValue.length);
-    return isNaN(Number(value)) && this.isA;
-  }
-
+  /**
+   * Handles raw data for creating a C-Instruction
+   * @param {string} rawValue 
+   */
   handleC(rawValue) {
     let compIns;
     let destIns;
@@ -74,10 +84,20 @@ export default class Instruction {
     this.contents = `111${compIns}${destIns}${jumpIns}`;
   }
 
+  /**
+   * Pads an instruction with the proper number of 0s
+   * @param {string} instruction 
+   * @returns string
+   */
   pad(instruction) {
     return instruction.padStart(16, '0');
   }
 
+  /**
+   * Converts to binary
+   * @param {number} number 
+   * @returns string
+   */
   convertToBinary(number) {
     return (number >>> 0).toString(2);
   }

@@ -12,6 +12,6 @@ const core = new Core({
 });
 
 document.addEventListener('requestProcess', (rawData) => {
-  const binary = parser.process(rawData.detail);
-  core.handleParsed(binary);
+  const instructions = parser.process(rawData.detail);
+  core.handleParsed(instructions);
 });

@@ -84,6 +84,7 @@ export default class Core {
 
   /**
    * Gets the value of the source textarea
+   * @returns string
    */
   getSource() {
     return this.sourceTextArea.value;

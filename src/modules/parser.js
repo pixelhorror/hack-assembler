@@ -30,30 +30,29 @@ export default class Parser {
   /**
    * Processes a raw string into a Hack instruction
    * @param {string} code 
+   * @returns string[]
    */
   process(code) {
     const codeWithSymbols = this.buildLabels(code);
-    let instructions = [];
     let currentAddress = 16;
 
-    for (let i=0; i < codeWithSymbols.length; i++) {
-      const instruction = new Instruction(codeWithSymbols[i]);
-
-      if (instruction.hasSymbol()) {
-        const address = instruction.getSymbolValue();
+    const instructions = codeWithSymbols.map((line) => {
+      if (this.isSymbol(line)) {
+        const address = this.getSymbolValue(line);
 
         if (symbols[address] === undefined) {
           symbols[address] = currentAddress;
           currentAddress++;
         }
 
-        instruction.rawValue = `@${symbols[address]}`;
+        line = `@${symbols[address]}`;
       }
 
+      const instruction = new Instruction(line);
       instruction.compute();
 
-      instructions.push(instruction.value);
-    }
+      return instruction.value;
+    });
 
     return instructions.join('\n');
   }
@@ -61,6 +60,7 @@ export default class Parser {
   /**
    * Builds labels and cleans up code
    * @param {string} code 
+   * @returns string[]
    */
   buildLabels(code) {
     const lines = code.split('\n');
@@ -88,5 +88,28 @@ export default class Parser {
     }
 
     return rawInstructions;
+  }
+
+  /**
+   * Signals if the passed line is a symbol
+   * @param {string} line 
+   * @returns boolean
+   */
+  isSymbol(line) {
+    if (line.startsWith('@')) {
+      const value = this.getSymbolValue(line);
+      return isNaN(Number(value));
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Returns the string value of a symbol (removes the @)
+   * @param {string} line 
+   * @returns string
+   */
+  getSymbolValue(line) {
+    return line.substring(1, line.length);
   }
 }
