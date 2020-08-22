@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hack Assembler</title>
+  <style>
+    .container {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+    }
+
+    .hack-assembly, .machine-code {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #source-upload {
+      display: block;
+    }
+
+    #process {
+      height: 2em;
+    }
+  </style>
+</head>
+  <body>
+    <h1>Hack Assembler</h1>
+    <div class="container">
+      <div class="hack-assembly">
+        <h2>Assembly</h2>
+        <textarea
+          id="source"
+          cols="50"
+          rows="30"
+        >
+        </textarea>
+        <input type="file" id="source-upload" accept=".txt, .asm">
+      </div>
+      
+      <button id="process">Process</button>
+
+      <div class="machine-code">
+        <h2>Machine Code</h2>
+        <textarea
+          id="machine"
+          cols="50"
+          rows="30"
+        >
+        </textarea>
+        <a id='download' type="download">Download .hack File</a>
+      </div>
+    </div>
+    <script type="module" src="/src/modules/parser.js"></script>
+    <script type="module" src="/src/modules/core.js"></script>
+    <script type="module" src="/src/index.js"></script>
+  </body>
+</html>
