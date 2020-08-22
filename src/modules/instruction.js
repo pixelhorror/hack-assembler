@@ -1,6 +1,17 @@
 import { compTable, destTable, jumpTable } from './tables.js';
 
 export default class Instruction {
+  rawValue = undefined;
+  isAInstruction = false;
+
+  get isA() {
+    return this.isAInstruction;
+  }
+
+  get isC() {
+    return !this.isA;
+  }
+
   set contents(binary) {
     try {
       if (binary.includes('undefined')) {
@@ -14,24 +25,38 @@ export default class Instruction {
     }
   }
 
-  constructor(rawInstruction) {
-    if (rawInstruction.startsWith('@')) {
-      this.handleA(rawInstruction);
+  constructor(rawValue) {
+    this.rawValue = rawValue;
+    this.isAInstruction = rawValue.startsWith('@') ? true : false;
+  }
+
+  compute() {
+    if (this.isA) {
+      this.handleA(this.rawValue);
     } else {
-      this.handleC(rawInstruction);
+      this.handleC(this.rawValue);
     }
   }
 
-  handleA(rawInstruction) {
-    const address = rawInstruction.substr(1, rawInstruction.length);
+  getSymbolValue() {
+    return this.rawValue.substr(1, this.rawValue.length);
+  }
+
+  handleA(rawValue) {
+    let address = rawValue.substr(1, rawValue.length);
     const binary = this.convertToBinary(address);
     this.contents = this.pad(binary);
   }
 
-  handleC(rawInstruction) {
+  hasSymbol() {
+    const value = this.rawValue.substring(1, this.rawValue.length);
+    return isNaN(Number(value)) && this.isA;
+  }
+
+  handleC(rawValue) {
     let compIns;
     let destIns;
-    const [destComp, jump] = rawInstruction.split(';');
+    const [destComp, jump] = rawValue.split(';');
     const jumpIns = jumpTable[jump ? jump : ''];
 
     const splitted = destComp.split('=');
