@@ -1,5 +1,7 @@
 # Hack Assembler for NAND2Tetris
 
+![Assembler](https://i.imgur.com/3RhZAKi.png)
+
 This is a quick and dirty implementation of the Hack Assembler detailed in the [course](https://www.nand2tetris.org/course). It assumes proper syntax and it'll probably break if you don't follow.
 
 # Details
